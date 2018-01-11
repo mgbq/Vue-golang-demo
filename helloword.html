@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>helloform_Vue</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="/static/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+    </head>
+    <body>
+    <div class="hello">
+        <ul>
+            <form @submit.prevent="submit">
+                <input type="text" name="name" v-model="user.username">
+                <input type="password" name="password" v-model="user.password">
+                <input type="submit" value="提交">
+            </form>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+         el: '.hello',
+         data: {
+
+            user: {
+                username: '',
+                password: ''
+            }
+            },
+
+            methods: {
+                 submit: function(event) {
+                    var qs = JSON.stringify(this.user);
+                    this.$http.post('/login', qs).then((response) => {
+                        // success callback
+                        alert("success");
+                    }, (response) => {
+                        // error callback
+                        alert("error")
+                    });
+
+                }
+            },
+        })
+    </script>
+
+    </body>
+</html>
